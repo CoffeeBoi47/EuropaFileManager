@@ -5,7 +5,7 @@ from pathlib import Path
 from tkinter import *
 import PIL.Image
 import PIL.ImageTk
-import emoji
+
 
 #Init Tfkinter
 root = Tk()
