@@ -1,7 +1,7 @@
 #!python3
 #Imports
 import os, shutil
-from pathlib import Path
+from os.path import expanduser
 from tkinter import *
 
 #Init Tfkinter
@@ -11,8 +11,9 @@ root.title("Europa")
 root.call('encoding', 'system', 'utf-8')
 
 #Gets the home Directory
-path = str(Path.home())
+path = expanduser("~")
 path = path + '/'
+print(path)
 
 #GUI Init
 def MainBegin(path):
@@ -50,7 +51,7 @@ def MainBegin(path):
 
 
 
-    path = str(Path.home())
+    path = expanduser("~")
     Files.delete(0, 'end')
     Type.delete(0, 'end')
     listfiles(path)
