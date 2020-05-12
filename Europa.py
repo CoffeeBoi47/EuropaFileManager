@@ -3,9 +3,6 @@
 import os, shutil
 from pathlib import Path
 from tkinter import *
-import PIL.Image
-import PIL.ImageTk
-
 
 #Init Tfkinter
 root = Tk()
@@ -37,6 +34,7 @@ def MainBegin(path):
     Type.bind("<Button-4>", lambda event: OnMouseWheel(event, "up"))
     Size.bind("<Button-4>", lambda event: OnMouseWheel(event, "up"))
     Size.bind("<Button-5>", lambda event: OnMouseWheel(event, "down"))
+    Files.bind("<Button-3>")
 
     Copy = Button(root, text='Copy')
     Search.grid(row=1, column=0)
