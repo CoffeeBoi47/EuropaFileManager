@@ -13,7 +13,7 @@ root.call('encoding', 'system', 'utf-8')
 #Gets the home Directory
 path = expanduser("~")
 path = path + '/'
-print(path)
+
 
 #GUI Init
 def MainBegin(path):
@@ -78,8 +78,8 @@ def FavMenuInit(path, Menu):
     #Makes a Favorites.txt and adds the defualt Menu Folders if there is not a Favorites.txt
     else:
         with open(os.path.join(path2, filename), 'w') as favorites:
-            favorites.write("Home\n Downloads\n Desktop\n Downloads\n ")
-            favorites.write(" /home/john/\n /home/john/Downloads/\n /home/john/Desktop\n /home/john/Downloads\n ")
+            favorites.write("Home\n Downloads\n Desktop\n")
+            favorites.write(f" {path}\n {path}Downloads/\n {path}Desktop\n")
             favorites.close()
             favorites = open(os.path.join(path2, filename), 'r')
 
