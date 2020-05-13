@@ -51,7 +51,7 @@ def MainBegin(path):
 
 
 
-    path = expanduser("~")
+    path = expanduser("~") + "/"
     Files.delete(0, 'end')
     Type.delete(0, 'end')
     listfiles(path)
@@ -73,13 +73,13 @@ def FavMenuInit(path, Menu):
 
     filename = "Favorites.txt"
     #Opens the Favorites.txt if it exsists
-    if os.path.exists(path2 + '/Favoriftes.txt'):
+    if os.path.exists(path2 + '/Favorites.txt'):
         favorites = open(os.path.join(path2, filename), 'r')
     #Makes a Favorites.txt and adds the defualt Menu Folders if there is not a Favorites.txt
     else:
         with open(os.path.join(path2, filename), 'w') as favorites:
             favorites.write("Home\n Downloads\n Desktop\n")
-            favorites.write(f" {path}\n {path}Downloads/\n {path}Desktop\n")
+            favorites.write(f" {path}\n {path}/Downloads/\n {path}/Desktop\n")
             favorites.close()
             favorites = open(os.path.join(path2, filename), 'r')
 
@@ -147,7 +147,7 @@ def onselectMenu(evt):
     w = evt.widget
     index = int(w.curselection()[0])
     value = w.get(index)
-    path = favorites[index + int(len(favorites) / 2)].strip()
+    path = favorites[index + int(len(favorites) / 2)].strip() + "/"
     Files.delete(0, 'end')
     Type.delete(0, 'end')
     v.set(path)
@@ -186,15 +186,18 @@ def Seek(path, options):
             print("Please specify either [folders] or [files]")
         break
 
+#Scrolls the File Type Listbox and Files Listbox together
 def OnMouseWheel(event, di):
+    #If scrolled up
     if di == "up":
         delta = -2
+    #If scrolled down
     elif di == 'down':
         delta = 2
+    #Scroll both Listboxes either up or down depending on wether you scrolled up or down
     Files.yview_scroll(delta,'units')
     Type.yview_scroll(delta,'units')
-    # this prevents default bindings from firing, which
-    # would end up scrolling the widget twice
+    #Stops the Listbox your hovering over from scrolling from you input so it doesnt scroll down twice
     return "break"
 
 
