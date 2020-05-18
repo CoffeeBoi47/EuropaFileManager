@@ -28,6 +28,10 @@ def MainBegin(path):
     Type = Listbox(root, selectmode=SINGLE)
     Size = Listbox(root, selectmode=SINGLE)
     Menu.bind('<<ListboxSelect>>', onselectMenu)
+
+
+    Files.bind("<Button-3>", preClick)
+    Files.bind("<Button-1>", onLeft)
     Files.bind('<Double-1>', OpenDir)
     Files.bind("<Button-5>", lambda event: OnMouseWheel(event, "down"))
     Type.bind("<Button-5>", lambda event: OnMouseWheel(event, "down"))
@@ -36,6 +40,7 @@ def MainBegin(path):
     Size.bind("<Button-4>", lambda event: OnMouseWheel(event, "up"))
     Size.bind("<Button-5>", lambda event: OnMouseWheel(event, "down"))
     Files.bind("<Button-3>")
+
 
     Copy = Button(root, text='Copy')
     Search.grid(row=1, column=0)
@@ -48,7 +53,6 @@ def MainBegin(path):
     Files.config(width=70, height=50)
     Size.grid(row=2, column=3)
     Size.config(width=12, height=50)
-
 
 
     path = expanduser("~") + "/"
@@ -133,13 +137,14 @@ def listfiles(path):
         elif x.endswith(".js"):
             Files.insert(END, x)
             Type.insert(END, 'Type: JS')
-
         elif x.endswith(".desktop"):
             Files.insert(END, x)
             Type.insert(END, 'Type: DEKSTOP')
         else:
             Files.insert(END, x)
             Type.insert(END, 'Type: FILE')
+
+
 
 #Adds the files from the selected favorite folder into the files listbox
 def onselectMenu(evt):
@@ -201,6 +206,55 @@ def OnMouseWheel(event, di):
     return "break"
 
 
+def onRight(event):
+    Files.selection_clear(0, END)
+    Files.selection_set(Files.nearest(event.y))
+    Files.activate(Files.nearest(event.y))
+
+    #Gets the X and Y coordinates slightly below the mouse so the menu pops up below the cursor instead of above it
+    cursorx = int(root.winfo_pointerx() - root.winfo_rootx())
+    cursory = int(root.winfo_pointery() - root.winfo_rooty())
+
+    # Now we define our right click menu canvas
+    onRight.menu = Canvas(root, width=150, height=50, highlightbackground="gray", highlightthickness=1)
+    # And here is where we use our X and Y variables, to place the menu where our cursor is,
+    # That's how right click menus should be placed.
+    onRight.menu.place(x=cursorx, y=cursory)
+    # This is for packing our options onto the canvas, to prevent the canvas from resizing.
+    # This is extremely useful if you split your program into multiple canvases or frames
+    # and the pack method is forcing them to resize.
+    onRight.menu.pack_propagate(0)
+    # Here is our label on the right click menu for deleting a row, notice the cursor
+    # value, which will give us a pointy finger when you hover over the option.
+    delLabel = Label(onRight.menu, text="Test Button", cursor="hand2", anchor="w")
+    delLabel.pack(side="top", padx=1, pady=1, fill="x")
+
+    # This function is for removing the canvas when an option is clicked.
+    def destroy():
+        onRight.menu.place_forget()
+
+    # This is the function that removes the selected item when the label is clicked.
+    def delete(*args):
+        print("Test button on the right click menu has been clicked!")
+        destroy()
+
+    delLabel.bind("<Button-1>", delete)
+
+# This is to prevent infinite right click menus; it sees if there is an existing menu
+# and removes it, bringing it out in a new position.
+def preClick(event):
+    try:
+        onRight.menu.place_forget()
+        onRight(event)
+    except Exception:
+        onRight(event)
+
+# Hide menu when left clicking
+def onLeft():
+    try:
+        onRight.menu.place_forget()
+    except Exception:
+        pass
 
 
 #CMD LINE VERSION COMMANDS, DEBRICATED!
