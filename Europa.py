@@ -33,6 +33,8 @@ def MainBegin(path):
     Files.bind("<Button-3>", preClick)
     Files.bind("<Button-1>", onLeft)
     Files.bind('<Double-1>', OpenDir)
+
+
     Files.bind("<Button-5>", lambda event: OnMouseWheel(event, "down"))
     Type.bind("<Button-5>", lambda event: OnMouseWheel(event, "down"))
     Files.bind("<Button-4>", lambda event: OnMouseWheel(event, "up"))
@@ -199,6 +201,9 @@ def OnMouseWheel(event, di):
     #If scrolled down
     elif di == 'down':
         delta = 2
+
+    #Closes a context menu if there is one
+    onLeft()
     #Scroll both Listboxes either up or down depending on wether you scrolled up or down
     Files.yview_scroll(delta,'units')
     Type.yview_scroll(delta,'units')
@@ -250,7 +255,7 @@ def preClick(event):
         onRight(event)
 
 # Hide menu when left clicking
-def onLeft():
+def onLeft(*args):
     try:
         onRight.menu.place_forget()
     except Exception:
