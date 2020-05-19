@@ -64,9 +64,6 @@ def MainBegin(path):
     listfiles(path)
     FavMenuInit(path, Menu)
 
-#Closes popup menus if you click away from them
-def popupFocusOut(Box):
-        Box.destroy()
 
 #Gets the Favorited Folders and loads them into the favorites menu
 def FavMenuInit(path, Menu):
@@ -263,30 +260,7 @@ def onLeft(*args):
         pass
 
 
-#CMD LINE VERSION COMMANDS, DEBRICATED!
 
-def Help(path, inp):
-    x = 1
-    ree = x in range(-len(inp), len(inp))
-    if ree == False:
-        listCmd = True
-    elif inp[1] == '':
-        listCmd = True
-    elif inp[1] == "cd":
-        listCmd = False
-        print("""Command: cd
-Function: Changes the Current Working Directory
-Usage: cd [Directory/Folder in the current Directory]""")
-        Cmd(path)
-    try:
-        if listCmd == True:
-            print("""Type [help 'command'] for info on that command.
-Commands:
-[cd] [list] [del] [help] [copy] [make]""")
-            Cmd(path)
-    except:
-        print("Please Enter a valid help command")
-        Cmd(path)
 
 def Del(path, inp):
     try:
@@ -297,32 +271,6 @@ def Del(path, inp):
         print("Unable to delete " + path + inp[1])
         Cmd(path)
 
-
-def cd(path, inp):
-    try:
-        if os.path.isdir(inp[1]) == True:
-            path = path + inp[1] + "/"
-            print("Changed Directory to " + path)
-            Cmd(path)
-        elif os.path.isdir(path + inp[1]) == True and inp[1] != "":
-            path = path + inp[1] + '/'
-            print("Changed Directory to " + path)
-            Cmd(path)
-        elif inp[1] == '':
-            path = "/home/john/"
-            Cmd(path)
-        else:
-            print(path + inp[1] + " is not a Directory!")
-            Cmd(path)
-    except:
-        path = "/home/john/"
-
-def Make(path, inp):
-    if inp[1] == "folder":
-        os.mkdir(path + inp[2])
-    else:
-        f = open(path + inp[2] + "." + inp[1], 'w')
-        f.close()
 
 def Rename(path, inp):
     try:
@@ -337,16 +285,6 @@ def Copy(path, inp):
     except:
         print("Unable to copy " + path + inp[1] + " to " + inp[2])
 
-
-
-def Open(path, inp):
-    try:
-        os.startfile(inp[1], 'open')
-    except:
-        try:
-            os.startfile(path + inp[1], 'open')
-        except:
-            print("Unable to open file")
 
 
 MainBegin(path)
