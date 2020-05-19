@@ -9,6 +9,7 @@ root = Tk()
 root.minsize(1200,1000)
 root.title("Europa")
 root.call('encoding', 'system', 'utf-8')
+root.configure(bg='black')
 
 #Gets the home Directory
 path = expanduser("~")
@@ -19,14 +20,14 @@ path = path + '/'
 def MainBegin(path):
     global Menu, Files, DirLabel, v, canvas, Type
     v = StringVar()
-    DirLabel = Label(root, textvariable=v)
+    DirLabel = Label(root, textvariable=v, bg='black', fg="white")
     v.set(path)
-    SearchLabel = Label(root, text='Search:').grid(row=0)
-    Search = Entry(root)
-    Files = Listbox(root, selectmode='single')
-    Menu = Listbox(root, selectmode=SINGLE)
-    Type = Listbox(root, selectmode=SINGLE)
-    Size = Listbox(root, selectmode=SINGLE)
+    SearchLabel = Label(root, text='Search:', bg='black', fg="white").grid(row=0)
+    Search = Entry(root, bg="black", fg="white")
+    Files = Listbox(root, selectmode='single', bg='black', fg="white")
+    Menu = Listbox(root, selectmode=SINGLE, bg='black', fg="white")
+    Type = Listbox(root, selectmode=SINGLE, bg='black', fg="white")
+    Size = Listbox(root, selectmode=SINGLE, bg='black', fg="white")
     Menu.bind('<<ListboxSelect>>', onselectMenu)
 
 
